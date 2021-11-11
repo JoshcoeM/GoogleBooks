@@ -17,4 +17,8 @@ export class BookComponent implements OnInit {
     
   }
 
+  favorite() : void{
+    console.log('favorite pressed');
+  }
+
 }

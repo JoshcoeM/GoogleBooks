@@ -51,5 +51,17 @@ describe('BookComponent', () => {
       const labelElement : DebugElement = fixture.debugElement.query(By.css('.author'));
       expect(labelElement.nativeElement.textContent).toBe('Author: author');
     });
+
+    it('Should have a favourite button', () =>{
+      const favoriteButton : DebugElement = fixture.debugElement.query(By.css('.favorite'));
+      expect(favoriteButton.nativeElement.textContent).toBe('Favorite');
+    });
+
+    it('Should call bookComponent.favorite when favourite button is clicked',() =>{
+      const favoriteButton : DebugElement = fixture.debugElement.query(By.css('.favorite'));
+      spyOn(component, 'favorite');
+      favoriteButton.nativeElement.click();
+      expect(component.favorite).toHaveBeenCalled();
+    });
   });
 });
