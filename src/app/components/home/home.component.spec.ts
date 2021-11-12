@@ -31,7 +31,8 @@ describe('HomeComponent', () => {
         provider: BookService,
         useClass: MockBookService
       }]
-    }).compileComponents().then(() => {
+    })
+    .compileComponents().then(() => {
       service = TestBed.inject(BookService);
     });
   });
@@ -81,6 +82,11 @@ describe('HomeComponent', () => {
       expect(home.favorite).toHaveBeenCalled();
     });
 
+    it('should have addNewBook anchor', () => {
+      const addElement : DebugElement = fixture.debugElement.query(By.css('.booksToRead .addNewBook'));
+      expect(addElement.nativeElement).toBeDefined();
+    });
+
     it('should set the favoriteBook to the passed value', () => {
       let oldBook: Book = new Book;
       let newBook: Book = new Book;
@@ -95,6 +101,8 @@ describe('HomeComponent', () => {
       fixture.detectChanges();
       const booksToRead = fixture.debugElement.queryAll(By.css('.booksToRead gb-book'));
       expect(booksToRead.length).toBe(3);
-    })
+    });
+
+   
   });
 });
