@@ -28,6 +28,14 @@ describe('BookComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe('Class', () =>{
+    it('emits a Book when favorite is called', () =>{
+      spyOn(component.favoriteEvent, 'emit');
+      component.favorite();
+      expect(component.favoriteEvent.emit).toHaveBeenCalledWith(component.book);
+    });
+  });
+
   describe('Template',() => {
     it('Should print the book title', () =>{
       const labelElement : DebugElement = fixture.debugElement.query(By.css('.title'));

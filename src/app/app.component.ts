@@ -18,4 +18,8 @@ export class AppComponent implements OnInit {
     this.favoriteBook = this.bookService.getFavorite();
   }
 
+  favorite(book : Book) : void{
+    this.favoriteBook = book;
+  }
+
 }
