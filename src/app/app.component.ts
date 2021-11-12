@@ -8,18 +8,12 @@ import { BookService } from './providers/book.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  favoriteBook : Book = new Book;
 
-  constructor(private bookService : BookService){
-    //this.favoriteBook = new Book;
+  constructor(){
   }
 
   ngOnInit() : void{
-    this.favoriteBook = this.bookService.getFavorite();
   }
 
-  favorite(book : Book) : void{
-    this.favoriteBook = book;
-  }
 
 }

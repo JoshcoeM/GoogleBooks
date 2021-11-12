@@ -57,9 +57,19 @@ describe('BookComponent', () => {
       expect(labelElement.nativeElement.textContent).toBe('Author: author');
     });
 
-    it('Should have a favourite button', () =>{
-      const favoriteButton : DebugElement = fixture.debugElement.query(By.css('.favorite'));
-      expect(favoriteButton.nativeElement.textContent).toBe('Favorite');
+    describe('favorite button?', () => {
+      it('false- show', () => {
+        component.isFavorite = false;
+        fixture.detectChanges();
+        const favoriteButton = fixture.debugElement.query(By.css('.favorite'));
+        expect(favoriteButton.nativeElement).toBeDefined();
+      });
+      it('true- doesnt show', () => {
+        component.isFavorite = true;
+        fixture.detectChanges();
+        const favoriteButton = fixture.debugElement.query(By.css('.favorite'));
+        expect(favoriteButton).toBeNull();
+      });
     });
 
     // it('Should call bookComponent.favorite when favourite button is clicked',() =>{

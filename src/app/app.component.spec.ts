@@ -12,6 +12,9 @@ class MockBookService {
   getFavorite() :Book {
     return new Book();
   }
+  getBooksToRead() : Book[]{
+    return [];
+  }
 }
 
 describe('AppComponent', () => {
@@ -56,9 +59,21 @@ describe('AppComponent', () => {
           expect(app.favoriteBook).toEqual(new Book);
       });
     });
+
+    describe('booksToRead array', ()=> {
+      it('should create many books on ititialize', () => {
+        const booksToRead: Book[] = [new Book(), new Book(), new Book()];
+        spyOn(service, 'getBooksToRead').and.returnValue(booksToRead);
+        app.ngOnInit();
+        fixture.detectChanges();
+        expect(service.getBooksToRead).toHaveBeenCalled();
+        expect(app.booksToRead).toBe(booksToRead);
+      });
+    });
   });
 
   describe('template', () =>{
+
     it('should invoke favorite(book : Book) when favorite is emitted', () =>{
       let book: Book = new Book;
       spyOn(app, 'favorite');
@@ -67,6 +82,7 @@ describe('AppComponent', () => {
       favoriteElement.nativeElement.dispatchEvent(event);
       expect(app.favorite).toHaveBeenCalled();
     });
+    
     it('should set the favoriteBook to the passed value', () =>{
       let oldBook: Book = new Book;
       let newBook: Book = new Book;
@@ -74,8 +90,17 @@ describe('AppComponent', () => {
       app.favoriteBook = oldBook;
       app.favorite(newBook);
       expect(app.favoriteBook).toBe(newBook);
+    });
+
+    it('renders a book object for each book',() =>{
+      app.booksToRead = [new Book(), new Book(), new Book()];
+      fixture.detectChanges();
+      const booksToRead = fixture.debugElement.queryAll(By.css('.booksToRead gb-book'));
+      expect(booksToRead.length).toBe(3);
     })
   });
+
+  
 
 
   

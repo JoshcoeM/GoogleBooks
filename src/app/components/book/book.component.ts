@@ -10,6 +10,9 @@ import { BookService } from 'src/app/providers/book.service';
 export class BookComponent {
   @Input()
   book: Book = new Book;
+  
+  @Input()
+  isFavorite : Boolean = false;
 
   @Output()
   favoriteEvent : EventEmitter<Book> = new EventEmitter<Book>();
