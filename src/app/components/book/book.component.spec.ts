@@ -6,11 +6,6 @@ import { BookService } from 'src/app/providers/book.service';
 
 import { BookComponent } from './book.component';
 
-class MockBookService {
-  getFavorite() :Book {
-    return new Book();
-  }
-}
 
 describe('BookComponent', () => {
   let service : BookService;
@@ -19,14 +14,8 @@ describe('BookComponent', () => {
 
   beforeEach(async ()=>{
       await TestBed.configureTestingModule({
-        declarations: [BookComponent],
-        providers : [{
-          provide: BookService,
-          useClass: MockBookService
-        }]
-      }).compileComponents().then(() =>{
-        service = TestBed.inject(BookService);
-      })
+        declarations: [BookComponent]
+      }).compileComponents();
     });
 
   beforeEach(() => {
@@ -38,22 +27,6 @@ describe('BookComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe('Class',() =>{
-
-    describe('ngOnInit',() => {
-      it('Should set the book property to equal getFavorite',() =>{
-          let book : Book = new Book;
-          book.title = 'title';
-          spyOn(service, 'getFavorite').and.returnValue(book);
-          component.ngOnInit();
-          fixture.detectChanges();
-          expect(service.getFavorite).toHaveBeenCalled();
-          expect(component.book).toBe(book);
-      });
-    });  
-  });
-
 
   describe('Template',() => {
     it('Should print the book title', () =>{
@@ -81,11 +54,11 @@ describe('BookComponent', () => {
       expect(favoriteButton.nativeElement.textContent).toBe('Favorite');
     });
 
-    it('Should call bookComponent.favorite when favourite button is clicked',() =>{
-      const favoriteButton : DebugElement = fixture.debugElement.query(By.css('.favorite'));
-      spyOn(component, 'favorite');
-      favoriteButton.nativeElement.click();
-      expect(component.favorite).toHaveBeenCalled();
-    });
+    // it('Should call bookComponent.favorite when favourite button is clicked',() =>{
+    //   const favoriteButton : DebugElement = fixture.debugElement.query(By.css('.favorite'));
+    //   spyOn(component, 'favorite');
+    //   favoriteButton.nativeElement.click();
+    //   expect(component.favorite).toHaveBeenCalled();
+    //});
   });
 });

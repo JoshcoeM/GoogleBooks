@@ -7,19 +7,16 @@ import { BookService } from 'src/app/providers/book.service';
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css']
 })
-export class BookComponent implements OnInit {
+export class BookComponent {
   @Input()
   book: Book = new Book;
 
-  constructor(private bookService : BookService) { 
+  constructor() { 
   }
 
   ngOnInit(): void {
-    this.book = this.bookService.getFavorite();
   }
 
-  favorite() : void{
-    console.log('favorite pressed');
-  }
+  
 
 }
