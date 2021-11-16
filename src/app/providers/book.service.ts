@@ -6,10 +6,17 @@ import { Book } from '../models/book';
 })
 export class BookService {
 
-  constructor() { }
+  favorite: Book = new Book(); 
+
+  constructor() {
+  }
 
   getFavorite() : Book{
-    return new Book();
+    return this.favorite;
+  }
+
+  setFavorite(book : Book) :void {
+    this.favorite = book;
   }
 
   getSearchResults(term : String) : Array<Book>{

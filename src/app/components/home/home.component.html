@@ -1,8 +1,9 @@
-<gb-book [book] = "favoriteBook" 
+<gb-search></gb-search>
+
+<gb-book [book] = "bookService.getFavorite()" 
 [isFavorite] = "true" 
 (favoriteEvent)= "favorite($event)" 
-class= "favoriteBook">
-</gb-book>
+class= "favoriteBook"></gb-book>
 
 <div class="booksToRead">
     <h1>Books To Read</h1>

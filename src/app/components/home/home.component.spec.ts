@@ -1,16 +1,22 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Book } from 'src/app/models/book';
 import { BookService } from 'src/app/providers/book.service';
 import { BookComponent } from '../book/book.component';
+import { SearchComponent } from '../search/search.component';
 
 import { HomeComponent } from './home.component';
 
 class MockBookService {
+  favorite : Book = new Book();
   getFavorite(): Book {
     return new Book();
+  }
+  setFavorite(book : Book) : void{
+    //
   }
   getBooksToRead(): Book[] {
     return [];
@@ -25,8 +31,8 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [HomeComponent, BookComponent],
+      imports: [RouterTestingModule, FormsModule],
+      declarations: [HomeComponent, BookComponent, SearchComponent],
       providers: [{
         provider: BookService,
         useClass: MockBookService
@@ -49,19 +55,9 @@ describe('HomeComponent', () => {
   });
 
   describe('class', () => {
-    describe('ngOnInit', () => {
-      it('Should set the book property to equal getFavorite', () => {
-        let book: Book = new Book();
-        spyOn(service, 'getFavorite').and.returnValue(book);
-        home.ngOnInit();
-        fixture.detectChanges();
-        expect(service.getFavorite).toHaveBeenCalled();
-        expect(home.favoriteBook).toEqual(new Book);
-      });
-    });
 
-    describe('booksToRead array', () => {
-      it('should create many books on ititialize', () => {
+    describe('ngOnInit', () => {
+      it('sets the books to read to be the booksToRead from bookservice', () => {
         const booksToRead: Book[] = [new Book(), new Book(), new Book()];
         spyOn(service, 'getBooksToRead').and.returnValue(booksToRead);
         home.ngOnInit();
@@ -70,31 +66,26 @@ describe('HomeComponent', () => {
         expect(home.booksToRead).toBe(booksToRead);
       });
     });
+
+    describe('addToFavorite', () => {
+      it('should set the favoriteBook to the passed value', () => {
+        let newFavorite: Book = new Book();
+        const bookService : BookService = TestBed.inject(BookService);
+        spyOn(bookService, 'setFavorite');
+        newFavorite.title = 'new title';
+        home.addToFavorite(newFavorite);
+        expect(bookService.setFavorite).toHaveBeenCalledWith(newFavorite);
+      });
+    })
+
   });
   describe('template', () => {
-
-    it('should invoke favorite(book : Book) when favorite is emitted', () => {
-      let book: Book = new Book;
-      spyOn(home, 'favorite');
-      const favoriteElement: DebugElement = fixture.debugElement.query(By.css('gb-book'));
-      const event: Event = new Event('favoriteEvent');
-      favoriteElement.nativeElement.dispatchEvent(event);
-      expect(home.favorite).toHaveBeenCalled();
-    });
 
     it('should have addNewBook anchor', () => {
       const addElement : DebugElement = fixture.debugElement.query(By.css('.booksToRead .addNewBook'));
       expect(addElement.nativeElement).toBeDefined();
     });
 
-    it('should set the favoriteBook to the passed value', () => {
-      let oldBook: Book = new Book;
-      let newBook: Book = new Book;
-      newBook.title = 'new title';
-      home.favoriteBook = oldBook;
-      home.favorite(newBook);
-      expect(home.favoriteBook).toBe(newBook);
-    });
 
     it('renders a book object for each book', () => {
       home.booksToRead = [new Book(), new Book(), new Book()];

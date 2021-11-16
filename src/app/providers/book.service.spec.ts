@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { Book } from '../models/book';
 
 import { BookService } from './book.service';
 
@@ -16,10 +17,21 @@ describe('BookService', () => {
 
   describe('getFavorite', () => {
     it('returns a defined book', () => {
-      const service: BookService = TestBed.inject(BookService);
-      expect(service.getFavorite()).toBeDefined();
+      let result: Book = service.getFavorite();
+      expect(result).toBeTruthy();
     });
   });
+
+  describe('setFavorite', () => {
+    it('sets favorite', () =>{
+      const newFavorite = new Book();
+      newFavorite.title = 'new Favorite';
+      service.setFavorite(newFavorite);
+      expect(service.favorite).toBe(newFavorite);
+    });
+  }); 
+
+  
   
   describe('getSearchResults', () =>{
     

@@ -8,21 +8,20 @@ import { BookService } from 'src/app/providers/book.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  favoriteBook : Book;
   booksToRead : Array<Book> =[];
 
-  constructor(private bookService : BookService){
-    this.favoriteBook = new Book;
+  constructor(public bookService : BookService){
   }
 
   ngOnInit() : void{
     this.booksToRead = this.bookService.getBooksToRead();
-    this.favoriteBook = this.bookService.getFavorite();
 
   }
 
-  favorite(book : Book) : void{
-    this.favoriteBook = book;
+  addToFavorite(book : Book) : void{
+    this.bookService.setFavorite(book);
   }
+
+
 
 }
