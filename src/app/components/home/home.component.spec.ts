@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +24,7 @@ class MockBookService {
   }
 }
 
+
 describe('HomeComponent', () => {
   let service: BookService;
   let home: HomeComponent;
@@ -31,7 +33,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
+      imports: [RouterTestingModule, FormsModule, HttpClientTestingModule],
       declarations: [HomeComponent, BookComponent, SearchComponent],
       providers: [{
         provider: BookService,
