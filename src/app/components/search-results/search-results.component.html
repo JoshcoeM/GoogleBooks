@@ -1,1 +1,4 @@
 <div class="searchTerm">{{this.term}}!</div>
+<div *ngFor="let book of results">
+    <gb-book [book]="book"></gb-book>
+</div>

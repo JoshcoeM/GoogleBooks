@@ -2,8 +2,9 @@
 
 <gb-book [book] = "bookService.getFavorite()" 
 [isFavorite] = "true" 
-(favoriteEvent)= "favorite($event)" 
-class= "favoriteBook"></gb-book>
+(favoriteEvent)= "addToFavorite($event)" 
+class= "favoriteBook">
+</gb-book>
 
 <div class="booksToRead">
     <h1>Books To Read</h1>
@@ -13,7 +14,7 @@ class= "favoriteBook"></gb-book>
     <div *ngFor= "let book of booksToRead">
         <gb-book [book] = "book" 
         [isFavorite] = "false" 
-        (favoriteEvent)= "favorite($event)" ></gb-book>
+        (favoriteEvent)= "addToFavorite($event)" ></gb-book>
     </div>
     
 </div>
